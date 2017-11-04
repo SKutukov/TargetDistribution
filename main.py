@@ -10,7 +10,8 @@ min_cost=5
 max_cost=50
 min_weight=4
 max_weight=10
-def generate_tasks(task_number,min_ga,max_ga,min_ta,max_ta,min_c,max_c,min_w,max_w):
+
+def generate_tasks(task_number,min_ga,max_ga,min_ta,max_ta,min_c,max_c,min_w,max_w,tasks):
     for i in range(0,task_number):
         m=random.randint(min_ga,max_ga)
         n = random.randint(min_ta, max_ta)
@@ -19,24 +20,24 @@ def generate_tasks(task_number,min_ga,max_ga,min_ta,max_ta,min_c,max_c,min_w,max
         for j in range (0,n):
             C.append(random.randint(min_c,max_c))
             D.append(random.randint(min_w, max_w))
-        print ("Task ", i, ":")
-        print(m,' ', n)
-        print(C)
-        print(D)
-        print("end")
 
-generate_tasks(task_number,min_guns_amount,max_guns_amount,min_targets_amount,max_targets_amount,min_cost,max_cost,min_weight,max_weight)
+        tasks.write("Task " + str(i) + ":\n")
+        tasks.write('m:' + str(m) + 'n:' + str(n) + '\n')
+        tasks.write('C:' + str(C) + '\n')
+        tasks.write('D:' + str(D) + '\n')
+
+
+with open('tasks.txt','w') as tasks:
+    generate_tasks(task_number,min_guns_amount,max_guns_amount,min_targets_amount,max_targets_amount,min_cost,max_cost,min_weight,max_weight,tasks)
+
+
+
 
 maxD = 20
 n = 4
 C = np.array([40, 45, 32, 14])
 D = np.array([5, 9, 8, 7])
 F=np.zeros((4,20))
-#print(maxD)
-#print(n)
-#print(C)
-#print(D)
-#print(F)
 
 def argmax(T,Solution,C):
     max_t=0
@@ -63,7 +64,7 @@ def knapsack_dylp(A,B,C):
        #Cicle for all partial summ
        for x in T_old:
            if (x+A[i])<=B:
-               if (not T.has_key(x+A[i])) or (T[x+A[i]]<T_old[x]+C[i]):
+               if ( (x+A[i] not in T)  or (T[x+A[i]]<T_old[x]+C[i])):
                    T[x+A[i]]=T_old[x]+C[i]
                    Solution[x+A[i]]=Solution[x]+[i]
  #      print "    -->",T
@@ -72,7 +73,8 @@ def knapsack_dylp(A,B,C):
    return (Result, ResultCost)
 
 
-Result,Cost=knapsack_dylp(D,maxD,C)
-
-#print(Result)
-#print(Cost)
+with open('result.txt','w') as results:
+    Result, Cost = knapsack_dylp(D, maxD, C)
+    results.write("Task " + str(0) + ":\n")
+    results.write(str(Result) + '\n')
+    results.write(str(Cost) + '\n')
