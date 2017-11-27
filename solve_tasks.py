@@ -1,8 +1,8 @@
 import task as TaskClass
 import task_solver
 import numpy as np
-def get_tasks_from_file():
-    with open('tasks.txt','r') as input:
+def get_tasks_from_file(filename):
+    with open(filename,'r') as input:
         i = 0
         content = input.readlines()
         tasks = []
@@ -34,9 +34,9 @@ def get_tasks_from_file():
             i = i + 2
         return tasks
 
-def solve_task():
-    task_from_file = get_tasks_from_file()
-    with open('result.txt','w') as results:
+def solve_task(result_filename, input_filename ):
+    task_from_file = get_tasks_from_file(input_filename)
+    with open(result_filename,'w') as results:
         i = 1
         for task in task_from_file:
             Result, Cost = task_solver.knapsack_dylp(task.D, task.m, task.C)
