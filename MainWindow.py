@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import (QWidget,QLabel, QPushButton, QVBoxLayout, QHBoxLayout)
 from PyQt5.QtGui import (QFont, QIcon)
 from PyQt5.QtWidgets import  (QStackedWidget, QFormLayout)
-from PyQt5.QtCore import  pyqtSignal
+from PyQt5.QtCore import  pyqtSignal, QSize
 
 import TaskGenerator as TG
 
@@ -38,7 +38,8 @@ class MainWindow(QWidget):
         layout.addWidget(self.botWidget)
 
         #settint size
-        self.setGeometry(500, 500, 500, 220)
+        self.setMaximumSize(QSize(900,500))
+        self.setMinimumSize(QSize(500,500))
         self.setWindowTitle('Задача целераспределения')
         self.setWindowIcon(QIcon('icon.jpeg'))
 
@@ -50,6 +51,7 @@ class MainWindow(QWidget):
 class ConfigWidget(QWidget):
     def __init__(self, parent=None):
         super(QWidget, self).__init__(parent)
+        # myQLineEdit.textChanged.connect(self.setName)
         # config layout
         self.configLayout = QVBoxLayout(self)
         self.configLabel = QLabel("Настройки:")
